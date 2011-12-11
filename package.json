@@ -1,0 +1,14 @@
+{
+  "author": "Stephen Belanger <admin@stephenbelanger.com> (http://stephenbelanger.com)",
+  "name": "dotpath",
+  "description": "Utility to wrap object with dotpath support for traversal, modification and existence checking.",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "engines": {
+    "node": "~0.4.12"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
