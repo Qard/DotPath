@@ -2,13 +2,15 @@
   "author": "Stephen Belanger <admin@stephenbelanger.com> (http://stephenbelanger.com)",
   "name": "dotpath",
   "description": "Utility to wrap object with dotpath support for traversal, modification and existence checking.",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": {
-    "url": ""
+    "url": "git://github.com/Qard/DotPath.git"
   },
   "engines": {
     "node": "~0.4.12"
   },
-  "dependencies": {},
+  "dependencies": {
+    "underscore":"*"
+  },
   "devDependencies": {}
 }

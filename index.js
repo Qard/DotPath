@@ -7,7 +7,9 @@
  * (c) 2011 Stephen Belanger
  * Licensed as MIT.
  */
-
+if (typeof module !== 'undefined') {
+  var _ = require('underscore')
+}
  /**
  * Construct the DotPath traversal object.
  * 
@@ -45,7 +47,7 @@ DotPath.prototype.exists = function (path) {
   var o = this.obj
 
   // Traverse through the object.
-  return this.split(path).reduce(function (memo, part) {
+  return _(this.split(path)).reduce(function (memo, part) {
     // We may have already failed.
     if ( ! memo) { return false }
 
@@ -72,7 +74,7 @@ DotPath.prototype.get = function (path) {
 
   // Make sure path exists before traversing.
   if ( ! this.exists(path)) { return undefined }
-  return this.split(path).reduce(function (memo, part) {
+  return _(this.split(path)).reduce(function (memo, part) {
     // Shift and return.
     o = o[part]
     return o
@@ -100,7 +102,7 @@ DotPath.prototype.set = function (path, val, destroy) {
   if (typeof val === 'undefined') { this.obj = path }
 
   var o = this.obj, parts = this.split(path)
-  return parts.reduce(function (memo, part, index) {
+  return _(parts).reduce(function (memo, part, index) {
     // We may have already failed.
     if ( ! memo) { return false }
 
