@@ -1,3 +1,4 @@
+#!/usr/bin/env mocha -r should -R spec
 var DotPath = require('./index')
 
 // Test different behaviours of the interface.
@@ -47,13 +48,13 @@ describe('DotPath', function () {
   describe('destructive and non-destructive behaviour', function () {
     var test = new DotPath({ foo: { bar: 'baz' } })
 
-    it('should not destroy when disabled', function () {
+    it('should not destroy when destroy disabled', function () {
       if (test.set('foo', 'bar')) {
         throw new Error('foo destroyed with destroy disabled')
       }
     })
 
-    it('should destroy when enabled', function () {
+    it('should destroy when destroy enabled', function () {
       if ( ! test.forceSet('foo', 'bar')) {
         throw new Error('foo not destroyed with destroy enabled')
       }
