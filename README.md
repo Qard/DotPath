@@ -10,7 +10,7 @@ DotPath is a utility to wrap objects with dotpath support for traversal, modific
 #### new DotPath(obj, separator)
 By default, '.' is used as the separation symbol. But you can change that to other things, such as '::'
 
-#### dotpath.exists(path)
+#### dotfs.exists(path)
 If any point in the path doesn't exist, will return false. If the end is reached, will return true.
 
 #### dotpath.get([path])
