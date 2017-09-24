@@ -1,5 +1,7 @@
 [![build status](https://secure.travis-ci.org/Qard/DotPath.png)](http://travis-ci.org/Qard/DotPath)
 # DotPath
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Qard/DotPath.svg)](https://greenkeeper.io/)
 DotPath is a utility to wrap objects with dotpath support for traversal, modification and existence checking.
 
 ## Usage
