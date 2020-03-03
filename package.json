@@ -1,16 +1,36 @@
 {
-  "author": "Stephen Belanger <admin@stephenbelanger.com> (http://stephenbelanger.com)",
   "name": "dotpath",
-  "description": "Utility to wrap object with dotpath support for traversal, modification and existence checking.",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Utility to traverse objects using a dot-separated path string",
+  "author": "Stephen Belanger <admin@stephenbelanger.com> (http://stephenbelanger.com)",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "precoverage": "npm run test",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "lint": "standard",
+    "pretest": "npm run lint",
+    "test": "nyc tap test.js"
+  },
+  "keywords": [
+    "object",
+    "traversal",
+    "navigate",
+    "dotpath",
+    "path"
+  ],
+  "homepage": "https://github.com/Qard/DotPath#readme",
   "repository": {
-    "url": "git://github.com/Qard/DotPath.git"
+    "type": "git",
+    "url": "git+https://github.com/Qard/DotPath.git"
   },
-  "engines": {
-    "node": ">= 0.4.0"
+  "bugs": {
+    "url": "https://github.com/Qard/DotPath/issues"
   },
-  "dependencies": {
-    "underscore":">= 1.2.0"
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "codecov": "^3.6.5",
+    "nyc": "^15.0.0",
+    "standard": "^14.3.1",
+    "tap": "^14.10.6"
+  }
 }

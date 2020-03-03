@@ -1,49 +1,52 @@
 [![build status](https://secure.travis-ci.org/Qard/DotPath.png)](http://travis-ci.org/Qard/DotPath)
+
 # DotPath
-DotPath is a utility to wrap objects with dotpath support for traversal, modification and existence checking.
+
+Utility to traverse objects using a dot-separated path string
 
 ## Usage
 
-    npm install dotpath
-
-## Interface
-
-#### new DotPath(obj, separator)
-By default, '.' is used as the separation symbol. But you can change that to other things, such as '::'
-
-#### dotpath.exists(path)
-If any point in the path doesn't exist, will return false. If the end is reached, will return true.
-
-#### dotpath.get([path])
-Get the value at the specified dotpath, if non supplied; return entire object. If any point in the path doesn't exist, will return undefined.
-
-#### dotpath.set(path, value, destroy)
-Set the value at the given dotpath. Will create new objects along the way if the path doesn't exist. If destroy is enabled, will also overwrite existing non-object parents in the path. If only one argument is supplied, the entire object will be overwritten to match it.
-
-#### dotpath.forceSet(path, value)
-This is simply an alias to set() that always uses destroy = true.
+```sh
+npm install dotpath
+```
 
 ## Example
 
-    var test = new DotPath({ foo: { bar: 'baz' } })
-    test.exists('foo.bar') // true
-    test.get('foo.bar') // 'baz'
-
-    test.set('foo.foo.foo.bar', 'baz') // true
-    test.get('foo.foo.foo.bar') // 'baz'
-
-    var success = test.set('foo', 'bar') // false
-    test.get('foo') // { bar: 'baz' }
-
-    // Try destructive mode now.
-    if ( ! success) {
-      test.forceSet('foo', 'bar') // true
-      test.get('foo') // 'bar'
+```js
+const test = new DotPath('session.user.firstName')
+const data = {
+  session: {
+    user: {
+      firstName: 'Stephen',
+      lastName: 'Belanger'
     }
+  }
+}
+
+console.log(`Hello, ${test.navigate(data)}!`) // Hello, Stephen!
+```
+
+## API
+
+#### new DotPath(path)
+
+Converts a dot-separated path string into an object for operating on the path components and navigating objects. The DotPath type extends from the Array class so it can do anything a regular array can.
+
+#### dotpath.current
+
+This is just a friendlier way to do `dotpath[dotpath.length - 1]`. It gets you the last element in the path fragment array.
+
+#### dotpath.navigate(object)
+
+Navigates to the path location in the given object. This will fail safely if intermediate parts of the path are not present by simply returning `undefined` like a normal property access would.
+
+#### dotpath.toString()
+
+Returns the dot-separated string form of the path.
 
 ---
 
-### Copyright (c) 2011 Stephen Belanger
+### Copyright (c) 2020 Stephen Belanger
 #### Licensed under MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

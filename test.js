@@ -1,70 +1,46 @@
-#!/usr/bin/env mocha -r should -R spec
-var DotPath = require('./index')
+const tap = require('tap')
 
-// Test different behaviours of the interface.
-describe('DotPath', function () {
+const DotPath = require('./index')
 
-  // The basics.
-  describe('basic setting, getting and existence', function () {
-    var test = new DotPath
+tap.test('construct', t => {
+  const path = new DotPath('foo.bar')
 
-    it('should set', function () {
-      if ( ! test.set('foo', 'bar')) {
-        throw new Error('foo was not set')
-      }
-    })
+  t.deepEqual(path, ['foo', 'bar'], 'new dot-separated string')
+  t.deepEqual(DotPath.from('foo.bar'), ['foo', 'bar'], 'from dot-separated string')
 
-    it('should exist', function () {
-      if ( ! test.exists('foo')) {
-        throw new Error('foo does not exist')
-      }
-    })
+  t.deepEqual(new DotPath(['foo', 'bar']), ['foo', 'bar'], 'new fragment array')
+  t.deepEqual(DotPath.from(['foo', 'bar']), ['foo', 'bar'], 'from fragment array')
 
-    it('should get', function () {
-      if (test.get('foo') !== 'bar') {
-        throw new Error('foo is not bar')
-      }
-    })
-  })
+  t.ok(path instanceof Array, 'path is a fragment array')
+  t.end()
+})
 
-  // Parent creation.
-  describe('parent object creation', function () {
-    var test = new DotPath
-    
-    it('should set', function () {
-      if ( ! test.set('foo.foo.foo.bar', 'baz')) {
-        throw new Error('foo.foo.foo.bar not set')
-      }
-    })
+tap.test('concat', t => {
+  const path = new DotPath('foo')
+  t.deepEqual(path.concat('bar.baz'), ['foo', 'bar', 'baz'], 'splits concat strings')
+  t.deepEqual(path.concat(['bar', 'baz']), ['foo', 'bar', 'baz'], 'concats fragment arrays as-is')
+  t.end()
+})
 
-    it('should get', function () {
-      if (test.get('foo.foo.foo.bar') !== 'baz') {
-        throw new Error('foo.foo.foo.bar is not baz')
-      }
-    })
-  })
+tap.test('current', t => {
+  const path = new DotPath('foo.bar')
+  t.deepEqual(path.current, 'bar', 'returns the last path fragment')
+  t.end()
+})
 
-  // Destructive vs non-desctructive.
-  describe('destructive and non-destructive behaviour', function () {
-    var test = new DotPath({ foo: { bar: 'baz' } })
+tap.test('toString', t => {
+  const path = new DotPath('foo.bar')
+  t.deepEqual(path.toString(), 'foo.bar', 'converts to dot-separated string')
+  t.end()
+})
 
-    it('should not destroy when destroy disabled', function () {
-      if (test.set('foo', 'bar')) {
-        throw new Error('foo destroyed with destroy disabled')
-      }
-    })
-
-    it('should destroy when destroy enabled', function () {
-      if ( ! test.forceSet('foo', 'bar')) {
-        throw new Error('foo not destroyed with destroy enabled')
-      }
-    })
-
-    it('should have changed', function () {
-      if (test.get('foo') !== 'bar') {
-        throw new Error('foo should be bar')
-      }
-    })
-  })
-
+tap.test('navigate', t => {
+  const path = new DotPath('foo.bar')
+  const data = {
+    foo: {
+      bar: 'baz'
+    }
+  }
+  t.deepEqual(path.navigate(data), 'baz', 'navigates to value')
+  t.end()
 })
